@@ -22,7 +22,7 @@ try:
                 dados = conexao.recv(1024)
                 
                 if not dados:
-                    print("Cliente fechou conexao!")
+                    #print("Cliente fechou conexao!")
                     break
                 
                 try:
