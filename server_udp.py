@@ -13,21 +13,28 @@ servidor_udp.bind((HOST, PORTA))
 
 print(f"Servidor UDP rodando e aguardando pacotes em {HOST}:{PORTA}...")
 
+try:
+    while(True):
 
-# 4. Recebe os dados e o endereço de origem do cliente (buffer de 1024 bytes)
-dados, endereco_cliente = servidor_udp.recvfrom(1024)
-        
-valor = float(dados.decode("utf-8"))
-cotacao = random.uniform(0, 10)
+        # 4. Recebe os dados e o endereço de origem do cliente (buffer de 1024 bytes)
+        dados, endereco_cliente = servidor_udp.recvfrom(1024)
+        try:    
+            valor = float(dados.decode("utf-8"))
+            cotacao = random.uniform(0, 10)
 
-print(f"Pacote recebido de {endereco_cliente}: {valor}")
-print(f"Cotação atual para conversão: {cotacao}")
+            print(f"Pacote recebido de {endereco_cliente}: {valor}")
+            print(f"Cotação atual para conversão: {cotacao}")
 
-moeda = valor * cotacao
-# 5. Envia uma resposta de volta para o endereço de onde o pacote veio
-resposta = f"Valor convertido: {moeda:.2f}".encode("utf-8")
-servidor_udp.sendto(resposta, endereco_cliente)
+            moeda = valor * cotacao
+            # 5. Envia uma resposta de volta para o endereço de onde o pacote veio
+            resposta = f"Valor convertido: {moeda:.2f}".encode("utf-8")
+            servidor_udp.sendto(resposta, endereco_cliente)
+        except ValueError:
+            erro = "Erro".encode("utf-8")
+            servidor_udp.sendto(erro, endereco_cliente)
+except KeyboardInterrupt:
+    print("\nServidor finalizado pelo usuário.")
 
-
-# 6. Fecha o socket
-servidor_udp.close()
+finally:
+    # 6. Fecha o socket
+    servidor_udp.close()
