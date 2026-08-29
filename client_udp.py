@@ -3,7 +3,7 @@ import socket
 # Cria o socket UDP
 cliente_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-valor = 20.45
+valor = 10.0
 
 mensagem = f"{valor}".encode('utf-8')
 # Envia direto para a origem/porta

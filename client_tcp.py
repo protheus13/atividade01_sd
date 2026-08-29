@@ -7,7 +7,7 @@ cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 cliente.connect(("192.168.1.80", 8080))
 
 # 3. Envia dados (é necessário codificar em bytes)
-valor = 10.5
+valor = 10.0
 
 # Converte o float para string e depois para bytes
 cliente.sendall(str(valor).encode('utf-8'))
